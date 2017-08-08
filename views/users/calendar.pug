@@ -1,0 +1,33 @@
+append head
+    style(type='text/css').
+        .btn-default {
+            border-color: #fff;
+        }
+        .table > tbody > tr > td:hover{
+            //- padding:0px;
+            background-color: #31b0d5;
+        }
+        .table > tbody > tr > td.active{
+            //- padding:0px;
+            background-color: #31b0d5;
+        }
+
+
+h3 #{month}
+- var day = 1
+- var cnt = 0
+- var firstDay = new Date(calender.year, n, 1).getDay();
+table.table
+    tbody
+    <tr>
+        while cnt < firstDay
+            td.dummy
+            - cnt++
+        while day <= data.days
+            - var today = new Date(calender.year, n, day).getDay()
+            if cnt++ % 7 ==0
+                </tr><tr>
+            td.day.text-center(class="day"+today) #{day} 
+            - day++
+    </tr>
+

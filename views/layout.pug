@@ -2,6 +2,52 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body
+    //- link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel="stylesheet", href='/bower_components/bootstrap/dist/css/bootstrap.min.css')
+    //- link(rel="stylesheet", href='/bower_components/bootstrap-calendar/css/calendar.css')
+    script(src='/bower_components/jquery/dist/jquery.min.js')
+    script(src='/bower_components/bootstrap/dist/js/bootstrap.min.js')
+    
+    //- script(src='/bower_components/bootstrap-calendar/js/calendar.js')
+    block head
+      style(type='text/css').
+        div.footer.well {
+          margin-bottom: 0px;
+        }
+        .affix {
+          top: 0;
+          width: 100%;
+          z-index:1;
+        }
+        .affix + .container-fluid {
+          padding-top: 70px;
+        }
+  
+  
+  body    
+    div.jumbotron.text-center
+      h1 TripGenie    
+      block head-bar
+
+    nav.navbar.navbar-default(data-spy="affix" data-offset-top="197")
+      div.container-fluid
+        div.navbar-header
+          a.navbar-brand(href="javascript:void") TripGenie
+        ul.nav.navbar-nav
+          li.active
+            <a href="#">Home</a>
+          li
+            <a href="#">Page 1</a>
+          li
+            <a href="#">Page 2</a>
+          li
+            <a href="#">Page 3</a>
+    
     block content
+
+    block footer
+      div.footer.well.text-center
+        h3 thank you
+
+
+    block foot

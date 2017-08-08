@@ -1,0 +1,43 @@
+extends ../layout
+
+append head-bar
+  p Manage Your Calender!
+
+block content
+
+  div.container
+    h1 #{calender.year}
+    div.btn-group(data-toggle="buttons")
+      label.btn.btn-primary#sat-off
+        input(type="checkbox")/ Mark All Saturdays as Off
+      label.btn.btn-primary#sun-off
+        input(type="checkbox")/ Mark All Sundays as Off
+    
+    - var n = 1;
+    <div class="row">
+    each data, month in calender.months
+      div.col-sm-4
+        include calendar.pug
+      if n++%3 == 0
+        </div><div class="row">
+    </div>
+
+append foot
+  script.
+    $('#sat-off').on('click', function(){
+      if($(this).hasClass('active'))
+        $('.day6').removeClass('active');
+      else
+        $('.day6').addClass('active');
+    })
+
+    $('#sun-off').on('click', function(){
+      if($(this).hasClass('active'))
+        $('.day0').removeClass('active');
+      else
+        $('.day0').addClass('active');
+    })
+
+    $('.day').on('click', function(){
+      $(this).toggleClass('active');
+    })
