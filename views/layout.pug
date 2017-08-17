@@ -5,8 +5,6 @@ html
     //- link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel="stylesheet", href='/bower_components/bootstrap/dist/css/bootstrap.min.css')
     //- link(rel="stylesheet", href='/bower_components/bootstrap-calendar/css/calendar.css')
-    script(src='/bower_components/jquery/dist/jquery.min.js')
-    script(src='/bower_components/bootstrap/dist/js/bootstrap.min.js')
     
     //- script(src='/bower_components/bootstrap-calendar/js/calendar.js')
     block head
@@ -29,7 +27,7 @@ html
       h1 TripGenie    
       block head-bar
 
-    nav.navbar.navbar-default(data-spy="affix" data-offset-top="197")
+    //- nav.navbar.navbar-default(data-spy="affix" data-offset-top="197")
       div.container-fluid
         div.navbar-header
           a.navbar-brand(href="javascript:void") TripGenie
@@ -43,11 +41,14 @@ html
           li
             <a href="#">Page 3</a>
     
-    block content
+    div.container
+      block content
 
-    block footer
+    //- block footer
       div.footer.well.text-center
         h3 thank you
 
 
     block foot
+      script(src='/bower_components/jquery/dist/jquery.min.js')
+      script(src='/bower_components/bootstrap/dist/js/bootstrap.min.js')

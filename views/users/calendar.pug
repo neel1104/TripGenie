@@ -27,7 +27,7 @@ table.table
             - var today = new Date(calender.year, n, day).getDay()
             if cnt++ % 7 ==0
                 </tr><tr>
-            td.day.text-center(class="day"+today) #{day} 
+            td.day.text-center(class="day"+today, id=calender.year + "-" + n + "-" + day, data-year=calender.year, data-month=n, data-day=day) #{day} 
             - day++
     </tr>
 

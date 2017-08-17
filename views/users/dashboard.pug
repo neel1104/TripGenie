@@ -4,7 +4,6 @@ append head-bar
   p Manage Your Calender!
 
 block content
-
   div.container
     h1 #{calender.year}
     div.btn-group(data-toggle="buttons")
@@ -12,6 +11,8 @@ block content
         input(type="checkbox")/ Mark All Saturdays as Off
       label.btn.btn-primary#sun-off
         input(type="checkbox")/ Mark All Sundays as Off
+
+    button.btn.btn-primary#save(style="margin-left:30px;") Save
     
     - var n = 1;
     <div class="row">
@@ -24,6 +25,14 @@ block content
 
 append foot
   script.
+    
+    var holidays = JSON.parse(("#{holidays}").replace(/&quot;/g, "\""));
+    holidays.forEach(function(holiday) {
+      var id = holiday.year + "-" + holiday.month + "-" + holiday.day;
+      $("#" + id).addClass('active');
+    }, this);
+
+
     $('#sat-off').on('click', function(){
       if($(this).hasClass('active'))
         $('.day6').removeClass('active');
@@ -40,4 +49,32 @@ append foot
 
     $('.day').on('click', function(){
       $(this).toggleClass('active');
+    })
+
+    $('#save').on('click', function(){
+      var data = [];
+      $( "td.day.active" ).each(function( index ) {
+        var day = {
+          day:$(this).data('day'),
+          month:$(this).data('month'),
+          year:$(this).data('year'),
+        }
+        data.push(day);
+      });
+      console.log(data);
+      
+      $.ajax({
+        beforeSend:function(){
+        },
+        url: "/users/calendar",
+        method: 'POST',
+        data: JSON.stringify({
+          data:data
+        }),
+        contentType: 'application/json',
+        dataType: 'json'
+      }).done(function() {
+        $( this ).addClass( "done" );
+      });
+
     })

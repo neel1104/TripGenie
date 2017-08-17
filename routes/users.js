@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var Calender = require('../models/mongo/calender');
 
 var basetpl = 'users/';
 var months = {
@@ -25,19 +26,49 @@ var days = {
   Friday:5,
   Saturday:6,
 }
+
+router.all(/.*/, function(req, res, next){
+  if (req.user)   next();
+  else res.redirect('/');
+});
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.get('/dashboard', function(req, res, next) {
-  var currentYear = new Date().getFullYear();
+router.get('/calendar', function(req, res, next) {
+  var holidays = [];
+  Calender.find({user:req.user}, function(err, result){
+    
+    result.forEach(function(date) {
+      holidays.push(date.json.date);
+    }, this);
 
-  if (currentYear % 4 ==0) months.February.days = 29;
-  var firstDay = new Date(currentYear, 1, 1);
-  var calender = { months: months, year:currentYear, firstDay: firstDay.getDay()};
-  
-  res.render(basetpl + 'dashboard', {calender: calender});
+    var currentYear = new Date().getFullYear();
+
+    if (currentYear % 4 ==0) months.February.days = 29;
+    var firstDay = new Date(currentYear, 1, 1);
+    var calender = { months: months, year:currentYear, firstDay: firstDay.getDay()};
+    
+    res.render(basetpl + 'dashboard', {calender: calender, user:req.user, holidays:JSON.stringify(holidays)});
+  });
+});
+
+
+router.post('/calendar', function(req, res, next) {
+  var holidays = req.body.data;
+
+  holidays.forEach(function(holiday) {
+    var calObj = new Calender();
+    calObj.user = req.user;
+    calObj.date = new Date(holiday.year, holiday.month, holiday.day);
+    calObj.save(function (err){
+      console.log(err);
+    });
+  }, this);
+
+  res.send('saved');
 });
 
 module.exports = router;
