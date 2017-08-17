@@ -27,19 +27,25 @@ html
       h1 TripGenie    
       block head-bar
 
-    //- nav.navbar.navbar-default(data-spy="affix" data-offset-top="197")
+    nav.navbar.navbar-default(data-spy="affix" data-offset-top="197")
       div.container-fluid
         div.navbar-header
           a.navbar-brand(href="javascript:void") TripGenie
         ul.nav.navbar-nav
           li.active
-            <a href="#">Home</a>
-          li
-            <a href="#">Page 1</a>
-          li
-            <a href="#">Page 2</a>
-          li
-            <a href="#">Page 3</a>
+            <a href="/">Home</a>
+          
+          if (user)
+            li
+              <a href="/users"> #{user.username}</a>
+            li 
+              a(href="/logout") Logout
+          else
+            li
+              <a href="/login">Login</a>
+            li
+              <a href="/register">Register</a>
+
     
     div.container
       block content

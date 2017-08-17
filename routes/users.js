@@ -34,7 +34,7 @@ router.all(/.*/, function(req, res, next){
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  res.redirect('/users/calendar');
 });
 
 router.get('/calendar', function(req, res, next) {
